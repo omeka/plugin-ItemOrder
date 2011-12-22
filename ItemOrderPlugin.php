@@ -60,7 +60,11 @@ class ItemOrderPlugin extends Omeka_Plugin_Abstract
     public function hookAdminAppendToCollectionsShowPrimary($collection)
     {
 ?>
+<h2>Item Order</h2>
 <p><a href="<?php echo uri('item-order', array('collection_id' => $collection->id)); ?>">Order items in this collection.</a></p>
+<form action="<?php echo uri('item-order/index/reset-order', array('collection_id' => $collection->id)); ?>" method="post">
+    <input type="submit" name="item_order_reset" value="Reset items to their default order" style="float: none; margin: 0;" />
+</form>
 <?php
     }
 }
