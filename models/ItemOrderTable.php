@@ -72,6 +72,9 @@ class ItemOrderTable extends Omeka_Db_Table
      */
     public function updateOrder($collectionId, array $items)
     {
+        // Reindex the items array to start at 1.
+        $items = array_combine(range(1, count($items)), array_values($items));
+        
         $itemOrderTable = $this->getDb()->ItemOrder;
         foreach ($items as $itemOrder => $itemId) {
             $sql = "
