@@ -26,6 +26,9 @@ jQuery(function() {
 <h1><?php echo $head['title']; ?></h1>
 <div id="primary">
 <h2>Order Items in Collection "<?php echo $collection->name; ?>"</h2>
+<p>Drag and drop the items below to change their order. Changes are saved 
+automatically. <a href="<?php echo uri('collections/show/' . $collection->id); ?>">Click here</a> 
+to return to the collection show page.</p>
 <p id="message" style="color: green;"></p>
 <ul id="sortable">
     <?php foreach ($items as $item): ?>
