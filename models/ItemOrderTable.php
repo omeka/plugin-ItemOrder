@@ -40,8 +40,9 @@ class ItemOrderTable extends Omeka_Db_Table
         $sql = "
         UPDATE $itemOrderTable 
         SET `order` = (SELECT @order := @order + 1) 
+        WHERE collection_id = ? 
         ORDER BY `order` ASC";
-        $this->query($sql);
+        $this->query($sql, $collectionId);
         
         // Get the items in this collection that have not been ordered and order 
         // them, starting at the max order + 1 of the previously ordered items.
