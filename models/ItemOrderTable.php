@@ -31,6 +31,20 @@ class ItemOrderTable extends Omeka_Db_Table
         $itemTable = $this->getDb()->Item;
         $itemOrderTable = $this->getDb()->ItemOrder;
         
+        // Delete item orders that are no longer assigned to the specified 
+        // collection. This is normally done on an item-by-item basis in the 
+        // after_item_save hook. This step is included in the event that an item 
+        // changes collection without firing the hook.
+        $sql = "
+        DELETE FROM $itemOrderTable 
+        WHERE collection_id = ?
+        AND item_id NOT IN (
+            SELECT i.id 
+            FROM $itemTable i 
+            WHERE i.collection_id = ?
+        )";
+        $this->query($sql, array($collectionId, $collectionId));
+        
         // Refresh the current item order to start with 1 and be sequentially 
         // unbroken. This step is necessary in the event that items have been 
         // deleted after they were ordered.

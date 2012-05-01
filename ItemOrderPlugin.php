@@ -6,6 +6,8 @@ class ItemOrderPlugin extends Omeka_Plugin_Abstract
     protected $_hooks = array(
         'install', 
         'uninstall', 
+        'after_save_item', 
+        'after_delete_item', 
         'item_browse_sql', 
         'admin_append_to_collections_show_primary', 
     );
@@ -33,6 +35,33 @@ class ItemOrderPlugin extends Omeka_Plugin_Abstract
     {
         $sql = "DROP TABLE IF EXISTS {$this->_db->ItemOrder}";
         $this->_db->query($sql);
+    }
+    
+    /**
+     * Delete the item order if the collection ID has changed.
+     */
+     public function hookAfterSaveItem($item)
+     {
+        if ($item->collection_id) {
+            $sql = "
+            DELETE FROM {$this->_db->ItemOrder} 
+            WHERE collection_id != ? 
+            AND item_id = ?";
+            $this->_db->query($sql, array($item->collection_id, $item->id));
+        } else {
+            $this->hookAfterDeleteItem($item);
+        }
+     }
+     
+     /**
+      * Delete the item order if the item was deleted.
+      */
+     public function hookAfterDeleteItem($item)
+     {
+        $sql = "
+        DELETE FROM {$this->_db->ItemOrder} 
+        WHERE item_id = ?";
+        $this->_db->query($sql, $item->id);
     }
     
     /**
