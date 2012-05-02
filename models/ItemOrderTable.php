@@ -69,13 +69,16 @@ class ItemOrderTable extends Omeka_Db_Table
         
         $sql = "
         INSERT INTO $itemOrderTable (collection_id, item_id, `order`) 
-        SELECT i.collection_id, i.id, @order := @order + 1  
-        FROM $itemTable i 
-        LEFT JOIN $itemOrderTable io 
-        ON i.id = io.item_id 
-        WHERE i.collection_id = ? 
-        AND io.id IS NULL 
-        ORDER BY i.id DESC";
+        SELECT s.collection_id, s.id, @order := @order + 1  
+        FROM (
+            SELECT i.collection_id, i.id
+            FROM $itemTable i 
+            LEFT JOIN $itemOrderTable io 
+            ON i.id = io.item_id 
+            WHERE i.collection_id = ? 
+            AND io.id IS NULL 
+            ORDER BY i.id DESC
+        ) AS s";
         $this->query($sql, $collectionId);
     }
     
