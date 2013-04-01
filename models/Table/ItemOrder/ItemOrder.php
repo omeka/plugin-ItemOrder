@@ -1,5 +1,5 @@
 <?php
-class ItemOrderTable extends Omeka_Db_Table
+class Table_ItemOrder_ItemOrder extends Omeka_Db_Table
 {
     /**
      * Fetch the items in order for the specified collection.
@@ -10,7 +10,7 @@ class ItemOrderTable extends Omeka_Db_Table
     public function fetchOrderedItems($collectionId)
     {
         $itemTable = $this->getDb()->Item;
-        $itemOrderTable = $this->getDb()->ItemOrder;
+        $itemOrderTable = $this->getDb()->ItemOrder_ItemOrder;
         $sql = "
         SELECT i.* 
         FROM $itemTable AS i 
@@ -29,7 +29,7 @@ class ItemOrderTable extends Omeka_Db_Table
     public function refreshItemOrder($collectionId)
     {
         $itemTable = $this->getDb()->Item;
-        $itemOrderTable = $this->getDb()->ItemOrder;
+        $itemOrderTable = $this->getDb()->ItemOrder_ItemOrder;
         
         // Delete item orders that are no longer assigned to the specified 
         // collection. This is normally done on an item-by-item basis in the 
@@ -40,7 +40,7 @@ class ItemOrderTable extends Omeka_Db_Table
         WHERE collection_id = ?
         AND item_id NOT IN (
             SELECT i.id 
-            FROM $itemTable i 
+            FROM $itemTable AS i 
             WHERE i.collection_id = ?
         )";
         $this->query($sql, array($collectionId, $collectionId));
@@ -72,7 +72,7 @@ class ItemOrderTable extends Omeka_Db_Table
         SELECT s.collection_id, s.id, @order := @order + 1  
         FROM (
             SELECT i.collection_id, i.id
-            FROM $itemTable i 
+            FROM $itemTable AS i 
             LEFT JOIN $itemOrderTable io 
             ON i.id = io.item_id 
             WHERE i.collection_id = ? 
@@ -93,7 +93,7 @@ class ItemOrderTable extends Omeka_Db_Table
         // Reindex the items array to start at 1.
         $items = array_combine(range(1, count($items)), array_values($items));
         
-        $itemOrderTable = $this->getDb()->ItemOrder;
+        $itemOrderTable = $this->getDb()->ItemOrder_ItemOrder;
         foreach ($items as $itemOrder => $itemId) {
             $sql = "
             UPDATE $itemOrderTable 
@@ -111,7 +111,7 @@ class ItemOrderTable extends Omeka_Db_Table
      */
     public function resetOrder($collectionId)
     {
-        $itemOrderTable = $this->getDb()->ItemOrder;
+        $itemOrderTable = $this->getDb()->ItemOrder_ItemOrder;
         $sql = "DELETE FROM $itemOrderTable WHERE collection_id = ?";
         $this->query($sql, $collectionId);
     }

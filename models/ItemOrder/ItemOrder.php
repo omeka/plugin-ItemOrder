@@ -1,7 +1,5 @@
 <?php
-require_once 'ItemOrderTable.php';
-
-class ItemOrder extends Omeka_Record
+class ItemOrder_ItemOrder extends Omeka_Record_AbstractRecord
 {
     public $collection_id;
     public $item_id;
