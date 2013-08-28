@@ -51,7 +51,8 @@ class ItemOrderPlugin extends Omeka_Plugin_AbstractPlugin
             collection_id int(10) unsigned NOT NULL,
             item_id int(10) unsigned NOT NULL,
             `order` int(10) unsigned NOT NULL,
-            PRIMARY KEY (id)
+            PRIMARY KEY (id),
+            KEY `item_id_order` (`item_id`,`order`)
         ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;";
         $this->_db->query($sql);
     }
@@ -75,8 +76,10 @@ class ItemOrderPlugin extends Omeka_Plugin_AbstractPlugin
         $db = $this->_db;
         
         if (version_compare($oldVersion, '2.0-dev', '<=')) {
-            $sql = "ALTER TABLE `{$db->prefix}item_orders` RENAME TO `{$this->_db->ItemOrder_ItemOrder}`";
+            $sql = "ALTER TABLE `{$db->prefix}item_orders` RENAME TO `{$this->_db->ItemOrder_ItemOrder}` ";
             $db->query($sql);
+            $sql = "ALTER TABLE `{$this->_db->ItemOrder_ItemOrder}` ADD INDEX `item_id_order` (`item_id`,`order`) ";
+            $db->query($sql);            
         }   
     }
     
