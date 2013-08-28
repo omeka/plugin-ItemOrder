@@ -75,7 +75,7 @@ class ItemOrderPlugin extends Omeka_Plugin_AbstractPlugin
         $db = $this->_db;
         
         if (version_compare($oldVersion, '2.0-dev', '<=')) {
-            $sql = "ALTER TABLE `{$db->prefix}item_orders` RENAME TABLE TO `{$this->_db->ItemOrder_ItemOrder}`";
+            $sql = "ALTER TABLE `{$db->prefix}item_orders` RENAME TO `{$this->_db->ItemOrder_ItemOrder}`";
             $db->query($sql);
         }   
     }
