@@ -156,7 +156,11 @@ class ItemOrderPlugin extends Omeka_Plugin_AbstractPlugin
         // item order, 3) the item ID.
         $select->joinLeft(array('item_order_item_orders' => $db->ItemOrder_ItemOrder), 'items.id = item_order_item_orders.item_id', array())
                ->reset('order')
-               ->order('ISNULL(item_order_item_orders.order), item_order_item_orders.order ASC, items.id DESC');
+               ->order(array(
+                   'ISNULL(item_order_item_orders.order)',
+                   'item_order_item_orders.order ASC',
+                   'items.id DESC'
+               ));
     }
     
     /**
