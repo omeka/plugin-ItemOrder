@@ -26,14 +26,16 @@ class ItemOrderPlugin extends Omeka_Plugin_AbstractPlugin
         'define_acl',
         'after_save_item', 
         'after_delete_item', 
-        'items_browse_sql', 
+        'items_browse_sql',
         'admin_collections_show', 
     );
 
     /**
      * @var array Filters for the plugin.
      */
-    protected $_filters = array();
+    protected $_filters = array(
+        'items_browse_default_sort',
+    );
 
     /**
      * @var array Options and their default values.
@@ -180,5 +182,22 @@ class ItemOrderPlugin extends Omeka_Plugin_AbstractPlugin
 </form>
 </div>
 <?php
+    }
+
+    /**
+     * Ignore the items/browse default sort if a collection was specified in the
+     * routing or GET params.
+     *
+     * @param array $sort
+     * @param array $args
+     * @return array|null
+     */
+    public function filterItemsBrowseDefaultSort($sort, $args)
+    {
+        if (empty($args['params']['collection'])) {
+            return $sort;
+        } else {
+            return null;
+        }
     }
 }
