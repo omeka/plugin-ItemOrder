@@ -1,0 +1,13 @@
+#sortable { 
+    list-style-type: none; 
+    margin: 0; 
+    padding: 0; 
+}
+
+.item-title {
+    font-weight: bold;
+}
+
+.other-meta {
+    margin-left: 2rem;
+}
