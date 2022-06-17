@@ -11,7 +11,7 @@
 <p><a href="<?php echo url('collections/show/' . $collection->id); ?>">Click here</a> 
 to return to the collection show page.</p>
 <p id="message" style="color: green;"></p>
-<ul id="sortable" class="ui-sortable data-collection-id="<?php echo $collection->id; ?>">
+<ul id="sortable" class="ui-sortable" data-collection-id="<?php echo $collection->id; ?>">
     <?php foreach ($items as $item): ?>
     <?php
     $itemObj = get_record_by_id('item', $item['id']);
