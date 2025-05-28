@@ -1,13 +1,17 @@
-#sortable { 
+#sortable.item-order { 
     list-style-type: none; 
     margin: 0; 
     padding: 0; 
 }
 
-.item-title {
+#sortable.item-order .sortable-item {
+    justify-content: flex-start;
+}
+
+#sortable.item-order .item-title {
     font-weight: bold;
 }
 
-.other-meta {
-    margin-left: 2rem;
+#sortable.item-order .other-meta {
+    margin-left: .25rem;
 }
