@@ -20,9 +20,9 @@ to return to the collection show page.</p>
     $dateAdded = format_date(strtotime($item['added']), Zend_Date::DATETIME_MEDIUM);
     $itemId = html_escape($item['id']);
     ?>
-    <li id="items-<?php echo $itemId; ?>" class="ui-state-default sortable-item">
-      <span class="move icon" aria-label="<?php echo __('Move'); ?>" id="move-<?php echo $itemId; ?>" title="<?php echo __('Move'); ?>"></span>
-      <span class="item-title"><?php echo $title; ?></span>
+    <li id="items-<?php echo $itemId; ?>" class="ui-state-default sortable-item" role="group" aria-labelledby="item-<?php echo $itemId; ?>-label">
+      <span class="move icon" id="move-<?php echo $itemId; ?>" title="<?php echo __('Move'); ?>" aria-hidden="true"></span>
+      <span class="item-title" id="item-<?php echo $itemId; ?>-label"><?php echo $title; ?></span>
       <div class="other-meta">
         <?php if ($creator): ?>
         by <?php echo $creator; ?>
