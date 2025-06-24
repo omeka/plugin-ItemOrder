@@ -15,3 +15,15 @@
 #sortable.item-order .other-meta {
     margin-left: .25rem;
 }
+
+.item-external-link {
+    margin-left: auto;
+}
+
+.item-external-link:after {
+    content: "\f35d" / "";
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    display: inline-block;
+    margin-left: .25rem;
+}

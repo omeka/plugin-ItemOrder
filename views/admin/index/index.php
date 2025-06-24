@@ -28,8 +28,8 @@ to return to the collection show page.</p>
         by <?php echo $creator; ?>
         <?php endif; ?>
         (added <?php echo html_escape($dateAdded); ?>)
-        (<a href="<?php echo url('items/show/' . $itemObj->id); ?>" target="_blank">link</a>)
       </div>
+      <a class="item-external-link" href="<?php echo url('items/show/' . $itemObj->id); ?>" target="_blank"><?php echo __('View item'); ?></a>
     </li>
     <?php endforeach; ?>
 </ul>
