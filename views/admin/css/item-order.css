@@ -5,6 +5,7 @@
 }
 
 #sortable.item-order .sortable-item {
+    display: flex;
     justify-content: flex-start;
 }
 
