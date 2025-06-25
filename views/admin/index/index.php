@@ -29,7 +29,7 @@ to return to the collection show page.</p>
         <?php endif; ?>
         (added <?php echo html_escape($dateAdded); ?>)
       </div>
-      <a class="item-external-link" href="<?php echo url('items/show/' . $itemObj->id); ?>" target="_blank"><?php echo __('View item'); ?></a>
+      <a class="item-external-link" href="<?php echo url('items/show/' . $itemObj->id); ?>" target="_blank" aria-describedby="item-<?php echo $itemId; ?>-label"><?php echo __('View item'); ?></a>
     </li>
     <?php endforeach; ?>
 </ul>
