@@ -11,23 +11,25 @@
 <p><a href="<?php echo url('collections/show/' . $collection->id); ?>">Click here</a> 
 to return to the collection show page.</p>
 <p id="message" style="color: green;"></p>
-<ul id="sortable" class="ui-sortable" data-collection-id="<?php echo $collection->id; ?>">
+<ul id="sortable" class="ui-sortable item-order" data-collection-id="<?php echo $collection->id; ?>">
     <?php foreach ($items as $item): ?>
     <?php
     $itemObj = get_record_by_id('item', $item['id']);
     $title = strip_formatting(metadata($itemObj, array('Dublin Core', 'Title')));
     $creator = strip_formatting(metadata($itemObj, array('Dublin Core', 'Creator')));    
     $dateAdded = format_date(strtotime($item['added']), Zend_Date::DATETIME_MEDIUM);
+    $itemId = html_escape($item['id']);
     ?>
-    <li id="items-<?php echo html_escape($item['id']) ?>" class="ui-state-default sortable-item"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>
-      <span class="item-title"><?php echo $title; ?></span>
+    <li id="items-<?php echo $itemId; ?>" class="ui-state-default sortable-item">
+      <span class="move icon" id="move-<?php echo $itemId; ?>" title="<?php echo __('Move'); ?>" aria-hidden="true"></span>
+      <span class="item-title" id="item-<?php echo $itemId; ?>-label"><?php echo $title; ?></span>
       <div class="other-meta">
         <?php if ($creator): ?>
         by <?php echo $creator; ?>
         <?php endif; ?>
         (added <?php echo html_escape($dateAdded); ?>)
-        (<a href="<?php echo url('items/show/' . $itemObj->id); ?>" target="_blank">link</a>)
       </div>
+      <a class="item-external-link" href="<?php echo url('items/show/' . $itemObj->id); ?>" target="_blank" aria-describedby="item-<?php echo $itemId; ?>-label"><?php echo __('View item'); ?></a>
     </li>
     <?php endforeach; ?>
 </ul>
